@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.SwitchCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="?attr/actionBarSize"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:textOn="@string/language_vietnamese_code"
+    android:textOff="@string/language_english_code"
+    app:showText="true">
+
+</androidx.appcompat.widget.SwitchCompat>

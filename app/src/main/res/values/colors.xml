@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="red">#F40606</color>
+    <color name="green">#5FCC01</color>
+    <color name="blue">#032C91</color>
+    <color name="lightblue">#1B98EE</color>
+    <color name="black_trans">#33000000</color>
+    <color name="my_light_primary">#389F01</color>
+    <color name="my_dark_primary">#1B4A01</color>
+    <color name="primaryTextColor">#FFFFFFFF</color>
+
+    <color name="green_trans">#33389F01</color>
+
+</resources>

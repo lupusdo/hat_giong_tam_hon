@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/option_menu"
+        android:icon="@drawable/add"
+        android:title="option menu"
+        android:orderInCategory="100"
+        app:showAsAction="always">
+        <menu>
+            <item android:id="@+id/increase_text"
+                android:icon="@drawable/text_increase"
+                android:title="@string/increase_text"    />
+            <item android:id="@+id/decrease_text"
+                android:icon="@drawable/text_decrease"
+                android:title="@string/decrease_text" />
+            <item android:id="@+id/change_background"
+                android:title="@string/change_background" >
+            <!-- "file" submenu -->
+            <menu>
+                <group android:id="@+id/group_background"
+                    android:checkableBehavior="single">
+                    <item android:id="@+id/background_1"
+                        android:title="@string/background_1"
+                        />
+                    <item android:id="@+id/background_2"
+                        android:title="@string/background_2"
+                        />
+                </group>
+            </menu>
+            </item>
+            <item   android:id="@+id/change_font"
+                android:title="@string/change_font">
+                <menu>
+                    <group android:id="@+id/group_font"
+                        android:checkableBehavior="single">
+                        <item android:id="@+id/default_font"
+                            android:title="@string/default_font"
+                            />
+                        <item android:id="@+id/philosopher_font"
+                            android:title="@string/philosopher_font"
+                            />
+                    </group>
+                </menu>
+            </item>
+
+        </menu>
+
+    </item>
+    <item android:id="@+id/language"
+        android:title="@string/switch2"
+        app:actionViewClass="androidx.appcompat.widget.SwitchCompat"
+        app:showAsAction="ifRoom" />
+</menu>
