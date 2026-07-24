@@ -39,5 +39,20 @@ public class MyService extends Service {
     public void onDestroy() {
         super.onDestroy();
         mymusic.stop();
+        mymusic.release();
+        mymusic = null;
+    }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        if (mymusic != null) {
+            if (mymusic.isPlaying()) {
+                mymusic.stop();
+            }
+            mymusic.release();
+            mymusic = null;
+        }
+        stopSelf(); // Tự đóng service
+        super.onTaskRemoved(rootIntent);
     }
 }

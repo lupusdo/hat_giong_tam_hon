@@ -22,7 +22,7 @@ public class PagerAdapter2 extends RecyclerView.Adapter<PagerAdapter2.Holder>{
     Context context;
     List<String> ndList, titleList;
     private int textSize = 24;
-    Typeface typeface = Typeface.DEFAULT;
+    Typeface typeface = Typeface.create(Typeface.DEFAULT, Typeface.ITALIC);
 
     public PagerAdapter2(Context context, List<String> ndList,List<String> titleList) {
         this.context = context;
@@ -72,7 +72,7 @@ public class PagerAdapter2 extends RecyclerView.Adapter<PagerAdapter2.Holder>{
     }
 
     public void changeDefaultFont() {
-        typeface = Typeface.DEFAULT;
+        typeface = Typeface.create(Typeface.DEFAULT, Typeface.ITALIC);
         notifyDataSetChanged();
     }
 

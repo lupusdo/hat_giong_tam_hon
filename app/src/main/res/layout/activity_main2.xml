@@ -101,7 +101,7 @@
         android:contentDescription="@string/app_name"
         android:backgroundTint="@color/green_trans"
         android:layout_marginBottom="55dp"
-        android:layout_marginRight="16dp"/>
+        android:layout_marginEnd="16dp"/>
 
 
 

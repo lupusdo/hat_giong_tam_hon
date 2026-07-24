@@ -54,7 +54,6 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.Holder>{
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.recyclerView.setAdapter(recyclerAdapter);
         recyclerAdapter.notifyDataSetChanged();
-         holder.recyclerView.addItemDecoration(new DividerItemDecoration(context,DividerItemDecoration.VERTICAL));
 
     }
 
@@ -63,13 +62,11 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.Holder>{
         return dataPagerList.size();
     }
 
-
     public class Holder extends RecyclerView.ViewHolder {
         private RecyclerView recyclerView;
         public Holder(@NonNull View itemView) {
             super(itemView);
             recyclerView = itemView.findViewById(R.id.recyclerview);
-
         }
     }
 }

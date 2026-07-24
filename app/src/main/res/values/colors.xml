@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="red">#F40606</color>
-    <color name="green">#5FCC01</color>
-    <color name="blue">#032C91</color>
-    <color name="lightblue">#1B98EE</color>
-    <color name="black_trans">#33000000</color>
-    <color name="my_light_primary">#389F01</color>
-    <color name="my_dark_primary">#1B4A01</color>
-    <color name="primaryTextColor">#FFFFFFFF</color>
+    <!-- 1. Màu căn bản bắt buộc phải có -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
 
-    <color name="green_trans">#33389F01</color>
+    <!-- 2. Bảng màu chuyên nghiệp (Material 3) -->
+    <color name="primary">#386B1D</color> <!-- Xanh lá đậm -->
+    <color name="on_primary">#FFFFFF</color>
+    <color name="primary_container">#B9F396</color> <!-- Xanh lá nhạt -->
+
+    <color name="secondary">#57624A</color>
+    <color name="secondary_container">#DBE7C8</color>
+
+    <color name="background">#FDFDF6</color>
+    <color name="surface">#FDFDF6</color>
+    <color name="on_surface">#1A1C18</color>
+    <color name="outline">#74796D</color>
+
+    <!-- 3. ĐỊNH NGHĨA LẠI CÁC MÀU CŨ ĐỂ KHÔNG BỊ LỖI (Ánh xạ về màu mới) -->
+
+    <!-- Ánh xạ các màu cũ về tông Xanh chủ đạo để app đồng nhất -->
+    <color name="my_light_primary">@color/primary_container</color>
+    <color name="my_dark_primary">@color/primary</color>
+    <color name="green">@color/primary</color>
+
+    <!-- Màu xanh có độ trong suốt (Green Trans) -->
+    <color name="green_trans">#4D386B1D</color> <!-- 30% độ trong suốt của màu primary -->
 
 </resources>
+

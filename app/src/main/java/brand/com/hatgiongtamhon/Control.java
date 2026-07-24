@@ -36,7 +36,7 @@ public class Control {
             @Override
             public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                 super.onAdFailedToLoad(loadAdError);
-                Toast.makeText(activity, loadAdError.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(activity, loadAdError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         AdRequest adRequest = new AdRequest.Builder().build();

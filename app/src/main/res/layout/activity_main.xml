@@ -12,27 +12,31 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/background">
+        >
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            android:background="?attr/colorSurfaceContainer"
+            app:liftOnScroll="true"
+            android:fitsSystemWindows="true">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/collapingToolbarLayout"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-                app:titleEnabled="false"
-                app:contentScrim="@color/my_light_primary">
+                android:layout_height="200dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:titleCollapseMode="fade"
+                app:collapsedTitleTextColor="@color/white"
+                app:expandedTitleTextColor="@color/white"
+                app:contentScrim="?attr/colorPrimary">
 
                 <ImageView
                     android:id="@+id/img_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_logo"
                     app:layout_collapseMode="parallax" />
 
                 <androidx.appcompat.widget.Toolbar
@@ -40,58 +44,39 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
-                    android:layout_marginBottom="48dp"
-                    />
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tabLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/black_trans"
-                    android:layout_gravity="bottom"
-                    app:tabSelectedTextColor="@color/my_dark_primary"
-                    app:tabTextColor="@color/white"
-                    app:tabTextAppearance="@style/CustomTabText"
-
-                    />
-
+                    app:contentInsetStartWithNavigation="0dp" />
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-        </com.google.android.material.appbar.AppBarLayout>
-        <RelativeLayout
-            android:id="@+id/relativelayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewPager2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@id/bannerLayout"
-                android:layout_alignParentTop="true" />
-
-            <LinearLayout
-                android:id="@+id/bannerLayout"
+            <!-- TabLayout đã bỏ dấu < thừa và sẽ hiển thị vì AppBarLayout là wrap_content -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:orientation="vertical" />
-        </RelativeLayout>
+                app:tabIndicatorColor="?attr/colorPrimary"
+                app:tabSelectedTextColor="?attr/colorPrimary"
+                app:tabTextColor="?attr/colorOutline"
+                app:tabRippleColor="?attr/colorPrimaryContainer"
+                style="@style/Widget.Material3.TabLayout" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/music_on"
-            android:backgroundTint="@color/green_trans"
             android:layout_marginBottom="55dp"
-            android:layout_marginRight="16dp"      />
-
-
-
-
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/green_trans"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.MediumComponent" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
@@ -126,7 +111,5 @@
 
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
-
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

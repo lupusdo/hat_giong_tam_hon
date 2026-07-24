@@ -17,9 +17,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.os.LocaleListCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -546,13 +548,11 @@ public class MainActivity2 extends AppCompatActivity {
         readFile();
         switchCompat2.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if( isChecked){
-                changeLanguage(MainActivity2.this,"en");
-                finish();
-                startActivity(getIntent());
+                LocaleListCompat appLocales = LocaleListCompat.forLanguageTags("en");
+                AppCompatDelegate.setApplicationLocales(appLocales);
             } else {
-                changeLanguage(MainActivity2.this,"vi");
-                finish();
-                startActivity(getIntent());
+                LocaleListCompat appLocales = LocaleListCompat.forLanguageTags("vi");
+                AppCompatDelegate.setApplicationLocales(appLocales);
             }
             saveFile();
         });

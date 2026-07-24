@@ -1,12 +1,19 @@
 package brand.com.hatgiongtamhon;
 
+import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.os.LocaleListCompat;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -19,21 +26,13 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -41,10 +40,12 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import androidx.activity.OnBackPressedCallback;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
+    private AppBarLayout appBarLayout;
     private Toolbar toolbar;
     private NavigationView navigationView;
     private TabLayout mTablayout;
@@ -59,17 +60,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
     SwitchCompat switchCompat1;
-    private Control control;
-    LinearLayout bannerLayout;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-
         anhXa();
+        ViewCompat.setOnApplyWindowInsetsListener(appBarLayout, (v, insets) -> {
+                    Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+
+                    // Đẩy Padding Top của AppBarLayout xuống để né Status Bar
+                    v.setPadding(0, systemBars.top, 0, 0);
+
+                    return insets;
+        });
+
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Kiểm tra nếu DrawerLayout đang mở thì đóng nó lại
+                if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    // Nếu Drawer đã đóng, thoát ứng dụng hoặc quay lại màn hình trước
+                    setEnabled(false); // Vô hiệu hóa callback này để tránh lặp vô tận
+                    getOnBackPressedDispatcher().onBackPressed(); // Gọi lệnh back hệ thống
+                    setEnabled(true); // Kích hoạt lại cho lần sau
+                }
+            }
+        });
         setSupportActionBar(toolbar);
 
         //thêm Toggle cho navigation bar
@@ -107,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        viewPager2Adapter = new PagerAdapter(this, dataPagerList, new IClickItemListener() {
+        viewPager2Adapter= new PagerAdapter(this, dataPagerList, new IClickItemListener() {
             @Override
             public void onClickItem(int order, int ordertab) {
                 Intent i = new Intent(MainActivity.this, MainActivity2.class);
@@ -144,19 +167,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 if (switchCompat1.isChecked())
                 {
-                    changeLanguage(MainActivity.this,"en");
-                    finish();
-                    startActivity(getIntent());
+                    LocaleListCompat appLocales = LocaleListCompat.forLanguageTags("en");
+                    AppCompatDelegate.setApplicationLocales(appLocales);
                 } else {
-                    changeLanguage(MainActivity.this,"vi");
-                    finish();
-                    startActivity(getIntent());
+                    LocaleListCompat appLocales = LocaleListCompat.forLanguageTags("vi");
+                    AppCompatDelegate.setApplicationLocales(appLocales);
                 }
                 saveFile();
             }
         });
-        control = new Control(this);
-        control.loadBannerAd(bannerLayout);
+
 
     }
     private void getData()
@@ -293,6 +313,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void anhXa()
     {
         mDrawerLayout=findViewById(R.id.drawerLayout);
+        appBarLayout=findViewById(R.id.appBarLayout);
         toolbar=findViewById(R.id.toolbar);
         navigationView=findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
@@ -301,14 +322,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab = findViewById(R.id.fab);
 
         imgHeader = findViewById(R.id.img_toolbar);
-        imgHeader.setImageResource(R.drawable.img_logo);
         switchCompat1 = findViewById(R.id.switch_nav);
         switchCompat1.setThumbTintList(ColorStateList
                 .valueOf(ContextCompat.getColor(getApplicationContext(), R.color.my_dark_primary)));
         switchCompat1.setTrackTintList(ColorStateList
                 .valueOf(ContextCompat.getColor(getApplicationContext(), R.color.my_light_primary)));
-        bannerLayout = findViewById(R.id.bannerLayout);
+
     }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item)
     {
@@ -338,18 +359,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
-    @Override
-    public void onBackPressed()
-    {
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)){
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            Intent i1 = new Intent(MainActivity.this, MyService.class);
-            stopService(i1);
-            clearData();
-            super.onBackPressed();
-        }
-    }
+
+
     private void readFile()
     {
         sharedPref = getSharedPreferences("myfile",MODE_PRIVATE);
@@ -364,19 +375,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         editor.putBoolean("keylanguage",isEnglish);
         editor.apply();
     }
-    private void clearData() {
-        editor = sharedPref.edit();
-        editor.clear();
-        editor.commit();
-    }
-    private void changeLanguage(Activity activity, String languge)
-    {
-        Locale locale = new Locale(languge);
-        locale.setDefault(locale);
-        Resources resources = activity.getResources();
-        Configuration configuration = resources.getConfiguration();
-        configuration.setLocale(locale);
-        resources.updateConfiguration(configuration, resources.getDisplayMetrics() );
-    }
+
+
 
 }
