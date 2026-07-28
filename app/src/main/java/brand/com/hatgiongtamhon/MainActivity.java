@@ -69,11 +69,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         anhXa();
-        ViewCompat.setOnApplyWindowInsetsListener(appBarLayout, (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(mDrawerLayout, (v, insets) -> {
                     Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
 
-                    // Đẩy Padding Top của AppBarLayout xuống để né Status Bar
-                    v.setPadding(0, systemBars.top, 0, 0);
+                    v.setPadding(0, 0, 0, 0);
+                    navigationView.setPadding(0, 0, 0, systemBars.bottom);
 
                     return insets;
         });

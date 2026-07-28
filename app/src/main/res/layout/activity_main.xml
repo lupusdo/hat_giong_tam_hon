@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorSurfaceContainer"
             app:liftOnScroll="true"
-            android:fitsSystemWindows="true">
+            android:fitsSystemWindows="false">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/collapingToolbarLayout"
