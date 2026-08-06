@@ -16,22 +16,17 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager2.widget.ViewPager2;
-
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -39,8 +34,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import androidx.activity.OnBackPressedCallback;
+
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -70,12 +64,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         anhXa();
         ViewCompat.setOnApplyWindowInsetsListener(mDrawerLayout, (v, insets) -> {
-                    Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
 
-                    v.setPadding(0, 0, 0, 0);
-                    navigationView.setPadding(0, 0, 0, systemBars.bottom);
+            View appBarLayout = findViewById(R.id.appBarLayout); // Đảm bảo bạn đặt ID này trong XML
+            if (appBarLayout != null) {
+                appBarLayout.setPadding(systemBars.left, systemBars.top, systemBars.right, 0);
+            }
 
-                    return insets;
+            return WindowInsetsCompat.CONSUMED;
         });
 
 
@@ -322,7 +318,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab = findViewById(R.id.fab);
 
         imgHeader = findViewById(R.id.img_toolbar);
-        switchCompat1 = findViewById(R.id.switch_nav);
+        switchCompat1 = (SwitchCompat) navigationView.getMenu()
+                .findItem(R.id.nav_language).getActionView().findViewById(R.id.switch_in_menu);
+
         switchCompat1.setThumbTintList(ColorStateList
                 .valueOf(ContextCompat.getColor(getApplicationContext(), R.color.my_dark_primary)));
         switchCompat1.setTrackTintList(ColorStateList

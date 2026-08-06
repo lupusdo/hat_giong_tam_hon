@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,8 +21,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
 import androidx.core.os.LocaleListCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -29,6 +34,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import androidx.activity.EdgeToEdge;
+import android.view.WindowManager;
+import android.os.Build;
 
 public class MainActivity2 extends AppCompatActivity {
     ImageButton btnBack, btnHome, btnNext;
@@ -52,12 +60,28 @@ public class MainActivity2 extends AppCompatActivity {
     private int currentFont = FONT_DEFAULT;
     private Control control;
     private LinearLayout bannerLayout;
+    private CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         anhXa();
+        ViewCompat.setOnApplyWindowInsetsListener(coordinatorLayout, (view, insets) -> {
+            Insets insets1 =  insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            View appBarLayout = findViewById(R.id.appBarLayout2); // Đảm bảo bạn đặt ID này trong XML
+            if (appBarLayout != null) {
+                appBarLayout.setPadding(insets1.left, insets1.top, insets1.right, 0);
+            }
+            View banner = findViewById(R.id.bannerLayout2);
+            if (banner != null) {
+                banner.setPadding(0, 0, 0, insets1.bottom);
+            }
+
+            return WindowInsetsCompat.CONSUMED;
+        });
+
         getData();
         setData();
         hideBackNext();
@@ -492,6 +516,7 @@ public class MainActivity2 extends AppCompatActivity {
         musicon = bundle.getBoolean("key4");
     }
     private void anhXa(){
+        coordinatorLayout = findViewById(R.id.coordinatorLayout);
         btnBack = findViewById(R.id.btn_back);
         btnNext = findViewById(R.id.btn_next);
         btnHome = findViewById(R.id.btn_home);
